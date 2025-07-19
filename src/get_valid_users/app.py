@@ -42,7 +42,7 @@ def get_valid_users(username: str):
                 .execute()
             )
             if not profil_link_response.data:
-                return matched_row["profile_link"]
+                return matched_row
         offset += page_size
     return None
 

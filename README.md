@@ -14,7 +14,7 @@ gvus:
     action2: username, profile_id is not in the user_profile_links(foreign) table
     return: profile_link
 
-cups:
+cups: 
 
     args: username, profile_id
     table: scraped_accounts, user_profile_links(foreign)
