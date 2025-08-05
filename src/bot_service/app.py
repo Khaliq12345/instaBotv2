@@ -21,11 +21,10 @@ def process(profile_link: str):
     follow_user(ig_client, profile_link)
 
 
-#
+# Login
 def instagram_login(username: str, password: str) -> Client:
     session_file = f"{username}.json"
     client = Client()
-    #
     if check_session_is_available(username):
         get_session(username, session_file)
         try:
@@ -35,10 +34,8 @@ def instagram_login(username: str, password: str) -> Client:
             return client
         except Exception as e:
             print(f"Expired Session: {e}")
-    #
     print("Normal Login")
     client.login(username, password)
-    #
     client.dump_settings(session_file)
     store_session(session_file)
     print("New Session Saved")
@@ -47,9 +44,8 @@ def instagram_login(username: str, password: str) -> Client:
 
 # Follow
 def follow_user(client: Client, profile_link: str):
-    print(f"Profile Link : {profile_link}")
-    username = profile_link.rstrip("/").split("/")[-1]
     try:
+        username = profile_link.rstrip("/").split("/")[-1]
         user_id = client.user_id_from_username(username)
         client.user_follow(user_id)
         print(f"Now Following {username}")
@@ -69,7 +65,7 @@ def start_bot():
     print(f"Processing -- {profile_link}")
     process(profile_link)
     # Call cups
-    # connect_user_profile(username, profile["profile_id"])
+    connect_user_profile(username, profile["profile_id"])
 
 
 if __name__ == "__main__":
