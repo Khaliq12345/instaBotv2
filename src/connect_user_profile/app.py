@@ -1,11 +1,10 @@
+import sys
+
+sys.path.append("..")
+
+from src.core.config import SUPABASE_URL, SUPABASE_KEY
 from supabase import create_client, Client
 from datetime import datetime, timezone
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-SUPABASE_URL = os.getenv("SUPABASE_URL") or ""
-SUPABASE_KEY = os.getenv("SUPABASE_KEY") or ""
 
 
 def get_supabase_session() -> Client:

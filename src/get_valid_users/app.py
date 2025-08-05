@@ -1,11 +1,10 @@
+import sys
+
+sys.path.append("..")
+
+from src.core.config import SUPABASE_URL, SUPABASE_KEY
 from supabase import create_client, Client
 from datetime import datetime, timedelta, timezone
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-SUPABASE_URL = os.getenv("SUPABASE_URL") or ""
-SUPABASE_KEY = os.getenv("SUPABASE_KEY") or ""
 
 
 def get_supabase_session() -> Client:
@@ -27,7 +26,8 @@ def get_valid_users(username: str):
             supabase.table("scraped_account")
             .select("*")
             .or_(condition)
-            .range(offset, offset + page_size - 1)
+            .limit(page_size)
+            .offset(offset)
             .execute()
         )
         data = scraped_account_response.data
