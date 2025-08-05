@@ -5,6 +5,7 @@ Scraping Service = ss
 Get Valid User Service = gvus
 Connect User to a Profile Service = cups
 Bot Service = bs
+Storage Service = ss
 
 gvus:
 
@@ -35,3 +36,23 @@ bs:
         1. bot_mark will call gvus and pass Mark username to it returning a valid profile to work with
         2. bot_mark will login into mark's account and follow profile and like latest post
         3. call the cups service and pass Mark's username to it
+
+ss:
+
+    Create a storage in supabase called Session
+    3 Functions:
+        1. get_session
+        2. store_session
+        3. check_session_is_available
+
+
+
+1. Call check_session_is_available to confirm [Username].json
+if not session:
+    Login afresh
+if session:
+    Login with session
+
+2. Follow Account
+<!-- 3. Like lastest post -->
+
