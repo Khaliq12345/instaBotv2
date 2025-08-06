@@ -32,4 +32,4 @@ def connect_user_profile(username: str, profile_id: str):
 
 
 if __name__ == "__main__":
-    connect_user_profile("hafiz", "hafiz64")
+    connect_user_profile("hafiz", "3118281")

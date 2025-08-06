@@ -4,7 +4,7 @@ sys.path.append("..")
 
 from src.core.config import SUPABASE_URL, SUPABASE_KEY
 import os
-from supabase import create_client, Client 
+from supabase import create_client, Client
 
 
 def get_supabase_session() -> Client:
@@ -41,7 +41,9 @@ def store_session(file_path: str):
     filename = os.path.basename(file_path)
     try:
         with open(file_path, "rb") as f:
-            supabase.storage.from_(BUCKET_NAME).upload(filename, f, {"upsert": 'true'})
+            supabase.storage.from_(BUCKET_NAME).upload(
+                filename, f, {"upsert": "true"}
+            )
         print(f"Session uploadée : {filename}")
     except Exception as e:
         print(f"Erreur store_session: {e}")

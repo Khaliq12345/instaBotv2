@@ -54,7 +54,7 @@ def follow_user(client: Client, profile_link: str):
 
 
 def start_bot():
-    username = "Mark"
+    username = IG_USERNAME
     # Call gvus
     profile = get_valid_users(username)
     print(f"-- Profile ;; {profile}")
