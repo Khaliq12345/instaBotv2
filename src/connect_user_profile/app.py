@@ -2,20 +2,12 @@ import sys
 
 sys.path.append("..")
 
-from src.core.config import SUPABASE_URL, SUPABASE_KEY
-from supabase import create_client, Client
+from src.supabase_service.app import supabase
 from datetime import datetime, timezone
-
-
-def get_supabase_session() -> Client:
-    return create_client(supabase_url=SUPABASE_URL, supabase_key=SUPABASE_KEY)
-
 
 def connect_user_profile(username: str, profile_id: str):
     # Date
     today = datetime.now(timezone.utc).isoformat()
-    # Supabase
-    supabase = get_supabase_session()
     # Insert
     supabase.table("user_profile_links").insert(
         {

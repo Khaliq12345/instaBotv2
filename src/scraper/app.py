@@ -3,17 +3,12 @@ import sys
 sys.path.append("..")
 
 import httpx
-from src.core.config import HIKERAPI_TOKEN, SUPABASE_KEY, SUPABASE_URL
-from supabase import create_client, Client
-
-
-def get_supabase_session() -> Client:
-    return create_client(supabase_url=SUPABASE_URL, supabase_key=SUPABASE_KEY)
-
+from src.supabase_service.app import supabase
+from src.core.config import HIKERAPI_TOKEN
 
 def save_followers(followers: list[dict]) -> None:
     try:
-        client = get_supabase_session()
+        client = supabase
         for follower in followers:
             try:
                 client.table("scraped_account").insert(follower).execute()

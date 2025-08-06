@@ -2,21 +2,15 @@ import sys
 
 sys.path.append("..")
 
-from src.core.config import SUPABASE_URL, SUPABASE_KEY
-from supabase import create_client, Client
+from src.supabase_service.app import supabase
 from datetime import datetime, timedelta, timezone
-
-
-def get_supabase_session() -> Client:
-    return create_client(supabase_url=SUPABASE_URL, supabase_key=SUPABASE_KEY)
 
 
 def get_valid_users(username: str):
     # Date Limit
     today = datetime.now(timezone.utc)
     seven_days_ago = today - timedelta(days=7)
-    # Supabase
-    supabase = get_supabase_session()
+    # 
     page_size = 100
     offset = 0
     matched_row = None
