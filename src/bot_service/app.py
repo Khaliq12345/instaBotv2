@@ -1,5 +1,7 @@
 import sys
 
+from src.supabase_service.app import update_status_by_username
+
 
 sys.path.append("..")
 
@@ -83,20 +85,27 @@ def like_latest_post(client: Client, profile_link: str):
         print(f"Erreur like_latest_post: {e}")
 
 
-def start_bot():
-    username = IG_USERNAME
-    # Call gvus
-    profile = get_valid_users(username)
-    print(f"-- Profile -- {profile}")
-    if not profile:
-        return
-    profile_link = profile["profile_link"]
-    # Login, Follow and Like latest post
-    print(f"Processing -- {profile_link}")
-    process(profile_link)
-    # Call cups
-    # connect_user_profile(username, profile["profile_id"])
+def start_bot(username: str):
+    try:
+        print(f"Bot started for {username}")
+        # Call gvus
+        profile = get_valid_users(username)
+        print(f"-- Profile -- {profile}")
+        if not profile:
+            return
+        profile_link = profile["profile_link"]
+        # Login, Follow and Like latest post
+        print(f"Processing -- {profile_link}")
+        process(profile_link)
+        # Call cups
+        # connect_user_profile(username, profile["profile_id"])
+        # Done
+        update_status_by_username(username, "success")
+        print(f"Bot ended for {username}")
+    except Exception as e:
+        update_status_by_username(username, "failed")
+        print(f"Error Running Bot : {e}")
 
 
-if __name__ == "__main__":
-    start_bot()
+# if __name__ == "__main__":
+#     start_bot(IG_USERNAME)

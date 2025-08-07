@@ -1,9 +1,13 @@
-from src.bot_service.app import start_bot
+import uvicorn
 
 def main():
-    print("Hello from instabot!")
-    start_bot()
-
+    uvicorn.run(
+        "src.api.app:app", 
+        host="localhost",
+        port=8000,
+        reload=True,
+    )
 
 if __name__ == "__main__":
     main()
+
