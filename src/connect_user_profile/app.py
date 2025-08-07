@@ -2,10 +2,11 @@ import sys
 
 sys.path.append("..")
 
-from src.supabase_service.app import supabase
+from src.supabase_service.app import get_supabase_session
 from datetime import datetime, timezone
 
 def connect_user_profile(username: str, profile_id: str):
+    supabase = get_supabase_session()
     # Date
     today = datetime.now(timezone.utc).isoformat()
     # Insert

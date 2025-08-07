@@ -3,10 +3,11 @@ import sys
 sys.path.append("..")
 
 import httpx
-from src.supabase_service.app import supabase
+from src.supabase_service.app import get_supabase_session
 from src.core.config import HIKERAPI_TOKEN
 
 def save_followers(followers: list[dict]) -> None:
+    supabase = get_supabase_session()
     try:
         client = supabase
         for follower in followers:

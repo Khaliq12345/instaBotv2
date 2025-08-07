@@ -43,7 +43,7 @@ def instagram_login(username: str, password: str) -> Client:
         print("Normal Login")
         client.login(username, password)
         client.dump_settings(session_file)
-        store_session(session_file)
+        store_session(f"{username}.json", session_file)
         print("New Session Saved")
     finally:
         if os.path.exists(session_file):

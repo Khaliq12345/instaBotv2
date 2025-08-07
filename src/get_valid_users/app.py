@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("..")
 
-from src.supabase_service.app import supabase
+from src.supabase_service.app import get_supabase_session
 from datetime import datetime, timedelta, timezone
 
 
@@ -10,6 +10,8 @@ def get_valid_users(username: str):
     # Date Limit
     today = datetime.now(timezone.utc)
     seven_days_ago = today - timedelta(days=7)
+    # Supabase
+    supabase = get_supabase_session()
     # 
     page_size = 100
     offset = 0

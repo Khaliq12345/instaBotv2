@@ -2,49 +2,36 @@ import sys
 
 sys.path.append("..")
 
-from src.supabase_service.app import supabase
-import os
+from src.supabase_service.app import get_supabase_session
 
 BUCKET_NAME = "sessions"
 
-
 def check_session_is_available(username: str) -> bool:
+    supabase = get_supabase_session()
+    filename = f"{username}.json"
     try:
         response = supabase.storage.from_(BUCKET_NAME).list()
-        user_files = [
-            f["name"] for f in response if f["name"].startswith(f"{username}_")
-        ]
-        return len(user_files) > 0
+        return any(file["name"] == filename for file in response)
     except Exception as e:
         print(f"Erreur check_session_is_available: {e}")
         return False
 
 
 def get_session(username: str, output_path: str) -> bool:
+    supabase = get_supabase_session()
+    filename = f"{username}.json"
     try:
-        response = supabase.storage.from_(BUCKET_NAME).list()
-        user_files = [
-            f["name"] for f in response if f["name"].startswith(f"{username}_")
-        ]
-        if not user_files:
-            print("Aucun fichier trouvé pour ce username.")
-            return False
-        user_files.sort(
-            key=lambda x: int(x.rsplit("_", 1)[-1].split(".")[0]), reverse=True
-        )
-        latest_file = user_files[0]
-        data = supabase.storage.from_(BUCKET_NAME).download(latest_file)
+        data = supabase.storage.from_(BUCKET_NAME).download(filename)
         with open(output_path, "wb") as f:
             f.write(data)
-        print(f"Session téléchargée : {latest_file}")
         return True
     except Exception as e:
         print(f"Erreur get_session: {e}")
         return False
 
 
-def store_session(file_path: str):
-    filename = os.path.basename(file_path)
+def store_session(filename: str, file_path: str):
+    supabase = get_supabase_session()
     try:
         with open(file_path, "rb") as f:
             supabase.storage.from_(BUCKET_NAME).upload(filename, f, {"upsert": "true"})
